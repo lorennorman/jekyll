@@ -33,6 +33,7 @@ module Jekyll
         published_on = DateTime.parse( post[:published_on] ) rescue File.mtime( File.dirname(f) )
         meta          = ( meta_content ) ? YAML::load( meta_content.scan( self.regexp[:meta]).to_s ) : {}
         meta['title'] = title
+        meta['layout'] = 'post'
 
         formatted_date = published_on.strftime('%Y-%m-%d')
         post_name =  File.dirname(f).split(%r{/}).last.gsub(/\A\d+-/, '')
