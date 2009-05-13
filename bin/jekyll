@@ -122,7 +122,13 @@ if options['auto']
   dw.add_observer do |*args|
     t = Time.now.strftime("%Y-%m-%d %H:%M:%S")
     puts "[#{t}] regeneration: #{args.size} files changed"
-    site.process
+    begin
+      site.process
+    rescue Exception => e
+      STDERR.puts e
+      STDERR.puts e.backtrace.join("\n")
+      raise
+    end
   end
 
   dw.start
