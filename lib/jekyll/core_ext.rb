@@ -21,9 +21,18 @@ class Hash
   end
 end
 
+
 require 'ostruct'
 class ClosedStruct < OpenStruct
   def method_missing(symbol, *args)
     raise(NoMethodError, "undefined method `#{symbol}' for #{self}")
   end
+end
+
+# Thanks, ActiveSupport!
+class Date
+  # Converts datetime to an appropriate format for use in XML
+  def xmlschema
+    strftime("%Y-%m-%dT%H:%M:%S%Z")
+  end if RUBY_VERSION < '1.9'
 end

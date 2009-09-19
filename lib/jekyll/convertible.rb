@@ -18,11 +18,11 @@ module Jekyll
     def read_yaml(base, name)
       self.content = File.read(File.join(base, name))
 
-      if self.content =~ /^(---\s*\n.*?)\n---\s*\n/m
-        self.content = self.content[($1.size + 5)..-1]
-
-        self.data ||= {}
-        self.data = self.data.merge(YAML.load($1))
+      self.data ||= {}
+      
+      if self.content =~ /^(---\s*\n.*?\n?)(---.*?\n)/m
+        self.content = self.content[($1.size + $2.size)..-1]
+        self.data = self.data.deep_merge(YAML.load($1) || {})
       end
     end
 
