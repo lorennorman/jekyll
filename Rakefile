@@ -24,7 +24,6 @@ begin
   end
 rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install jeweler --version '>= 0.11.0'"
-  exit(1)
 end
 
 Rake::TestTask.new do |t|
