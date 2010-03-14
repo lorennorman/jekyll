@@ -3,6 +3,10 @@
 #
 # Requires
 #   self.site -> Jekyll::Site
+#   self.content=
+#   self.data=
+#   self.ext=
+#   self.output=
 module Jekyll
   module Convertible
     # Return the contents as a string
@@ -20,7 +24,7 @@ module Jekyll
 
       self.data ||= {}
       
-      if self.content =~ /^(---\s*\n.*?\n?)(---.*?\n)/m
+      if self.content =~ /^(---\s*\n.*?\n?)^(---\s*$\n?)/m
         self.content = self.content[($1.size + $2.size)..-1]
         self.data = self.data.deep_merge(YAML.load($1) || {})
       end
@@ -52,7 +56,7 @@ module Jekyll
       case self.ext[1..-1]
       when /textile/i
         return 'textile'
-      when /markdown/i, /mkdn/i, /md/i
+      when /markdown/i, /mkdn/i, /md/i, /mkd/i
         return 'markdown'
       when /haml/i
         return 'haml'
